@@ -1,0 +1,185 @@
+Please visit api.jQuery.com for further reading.
+to stringify the object to string please visit json.org and doqnload the library.
+
+Calling the ready() on document loads the page and DOM Hierarchy.
+
+--Selectors
+Its aim to select a node and take some action on them
+
+Selecting by tag name
+$('ancestor descendent') selects all the descendents 
+for e.g.
+$('table tr') - selects all the tr elements of table element
+they can be merged
+for e.g. $('p, a, span')
+
+Selecting by ID
+for e.g. $('#myId') returns node with myId id and there are more than one then it return the object of list to iterate through.
+
+Selecting the node by class name
+for e.g. $('.myClass') return the element(s) defined by that class name
+We can have multiple classes also
+for e.g. $('.myClass1, .myClass2') returns all the elements with these 2 classes (performance heavy)
+Another implementation is $('elementTag.className')
+For e.g. $('div.myClass')
+
+
+Selecting nodes by Attribute Value
+$('element[title]')
+For e.g. $('a[title="Click Here"]') Selects all the <a> elements that have title=Click Here
+Note that the a(anchor) element needs to have title. It is case sensitive.
+
+Selecting node by input nodes
+$(':input') 
+another type is $(':input[type="radio"|"checkbox"]')
+
+aditional features for selectors
+for e.g. $('div:contains("SomeText")') Selects all the div's that text 'sometext'
+$('tr:odd') and $('tr:even') rows start at 0 index
+$('span:first-child') selects the first child 
+$('span:last-child') selects the last child
+$('input[value^="sometext"]') ^= designates the starstwith syntax
+$('input[value$="sometext"]') $= designates the endswith syntax
+$('input[value*="sometext"]') *= designates the contains syntax
+
+
+--Interacting with DOM
+Syntax for each
+.each(function(index, element) {
+
+});
+index is index of the element program control is on and the element is the actual element
+Another implementation syntax
+$(selector).each(function(index) {
+    // function code // Use this word to get the current element. 
+});
+
+Important concept to remember that JQuery interacts with DOM Objects through the JQuery wrapper or directly.
+this.propertyName can be used directly to modify the objects property
+
+Modifying  Attributes
+for e.g. $('#myId').attr('title') retrives the value of title attribute
+For e.g. $('#myId').attr('title', 'New Title') sets the new value of title attribute
+attr can also take JSON object to set multiple values for attr
+For e.g. $('#myId').attr( {
+    title:'New Title',
+    style: 'align:center;'
+});
+
+$('#myId').append(); // Appends the HTML content 
+$('#myId').prepend(); // Preprends the HTML content to the id selector, simlar to append except appends before id selector
+similarly (not so efficient way)
+$('someHTML Text').appendTo('#myId'); // similar to append except html text is mentioned first
+$('someHTML text').prependTo('#myId'); prepends like earlier except HTML text is mentioned first
+
+$('#myID').wrap('SomeHTML'); // wraps the HTML
+$('#myId').remove(); //Removes the myId and its children
+
+$('Someselector').css('color', 'red'); // sets the selector with red color
+another implementation
+$('Someselector').css({
+    'color':'red',
+    'font-weight': 'bold'
+});
+
+Modifying CSS Classes
+$('p').addClass('ClassOne');
+Another implementation - more than one class
+$('p').addClass('ClassOne classTwo');
+
+if($('p').hasClass('ClassOne')) {
+    //perform some function
+}
+
+$('p').removeClass('ClassOne Classtwo');
+$('p').removeClass(); //removes all classes where p element is found
+
+$('#phoneDetails').toggleClass('highlight'); // on/off class
+
+-- Handling Events
+$('#myId').click(function (){
+    // perform some function
+});
+
+$('#myId').change(function (){
+    // perform some function
+});
+
+$('#myId').on('eventName', function (){ //eventName(s) could be something like click, blur etc.
+    // perform some function
+});
+
+$('#myId').off('eventName');
+Another implementation
+$('#myId').off();
+
+$('selector').hover(handleIn, handleOut)
+For e.g.
+
+$('#myId').hover(
+    function (){
+        $(this).css('background-color','red'); // mousedown event
+    },
+    function (){
+        $(this).css('background-color','red'); //mouseup event
+    },
+);
+another implementation
+$('p').hover(function() {
+    $(this).toggleClass('someClass');
+});
+
+hover can be replaced with toggle with little different functionality
+
+--Working with AJAX functions
+load() - loads HTML data
+$.get() or $.post() for getting raw server data or posting
+$.getJSon() for get/post JSON from / to server
+$.ajax() provides core functionality
+
+$(selector).load(URL, data, callback-Function) // used to load HTML content to be loaded from server
+to DOM object
+For e.g.
+$(document).ready(function() {
+    $('#helpButton').click() {
+        $('#myId').load('details.html');
+    }
+});
+
+Another implementation
+$('#myId').load('details.html', {PageSize:25});
+Another implementation with callback function
+$('#myId').load('details.html', 
+function(response, status, xhr) {
+    if(status == "error") {
+        alert(xhr.statusText);
+    }
+});
+
+$.get(url, data, callback, dataType)// retrieves data from server
+
+$.get('details.html', function(data) {
+    $('#myId').html(data);
+});
+
+$.getJSON(URL, data, callback-Function) // used to get JSON response from server
+
+$.getJSON('Details.html', {id:1}, function(data) {
+    alert(data.AttributeName)
+});
+
+$.post(url, data, callback, dataType)// posts data to server
+$.post('details.html', function(data) {
+    $('#myId').html(data);
+});
+
+
+Ajax functions provides extra control over making ajax calls
+JSON configuration properties as follows
+contentType
+data
+dataType
+error
+success
+type(GET/POST)
+
